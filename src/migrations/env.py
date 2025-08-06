@@ -7,6 +7,8 @@ from sqlalchemy import engine_from_config, pool
 
 sys.path.insert(0, dirname(dirname(abspath(__file__))))
 
+from apps.accounting.models import Account, Transaction  # noqa
+from apps.user.models import User  # noqa
 from config import settings
 from settings.database import Base
 
