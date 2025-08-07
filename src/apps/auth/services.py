@@ -2,7 +2,7 @@ from datetime import datetime, timedelta, timezone
 from typing import Any, Optional
 
 from argon2 import PasswordHasher
-from argon2.exceptions import VerificationError
+from argon2.exceptions import VerificationError, HashingError
 from fastapi import HTTPException, status
 from jose import jwt
 
@@ -35,6 +35,14 @@ class AuthService:
 
 
 class PasswordService:
+    @staticmethod
+    def hash_password(plain_password: str) -> str:
+        ph = PasswordHasher()
+        try:
+            return ph.hash(password=plain_password)
+        except HashingError:
+            raise
+
     @staticmethod
     def validate_password(plain_password: str, hashed_password: str) -> bool:
         ph = PasswordHasher()

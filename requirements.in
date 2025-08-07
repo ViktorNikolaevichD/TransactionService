@@ -4,5 +4,6 @@ asyncpg==0.30.0
 SQLAlchemy==2.0.42
 fastapi==0.116.1
 pydantic-settings==2.10.1
+pydantic[email]==2.11.7
 python-jose[cryptography]==3.4.0
 uvicorn==0.35.0

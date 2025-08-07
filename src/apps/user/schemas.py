@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
 
 
 class SUserRead(BaseModel):
@@ -9,3 +9,13 @@ class SUserRead(BaseModel):
     model_config = {
         "from_attributes": True
     }
+
+
+class SUserCreate(BaseModel):
+    email: EmailStr
+    password: str
+    full_name: str
+
+
+class SUserUpdate(SUserCreate):
+    ...
