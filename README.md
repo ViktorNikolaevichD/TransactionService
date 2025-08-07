@@ -106,3 +106,9 @@ $ docker-compose up -d
 4. **Доступ к проекту**
 
 Теперь документация к вашему проекту доступна по адресу http://127.0.0.1:8000/docs
+
+# email/пароли для теста
+```bash
+user: test@example.com/user
+admin: admin@example.com/admin
+```
