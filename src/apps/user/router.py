@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 
 from apps.user.models import User
 from apps.user.services import get_user_service
-from apps.user.shemas import SUserRead
+from apps.user.schemas import SUserRead
 from apps.user.utils import get_current_admin, get_current_user
 
 router = APIRouter(
