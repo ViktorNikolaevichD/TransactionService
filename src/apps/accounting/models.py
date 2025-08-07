@@ -1,4 +1,4 @@
-from sqlalchemy import Integer, ForeignKey
+from sqlalchemy import Integer, ForeignKey, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from apps.user.models import User
@@ -19,7 +19,7 @@ class Account(Base):
 class Transaction(Base):
     __tablename__ = "transactions"
 
-    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    id: Mapped[str] = mapped_column(String, primary_key=True)
     account_id: Mapped[int] = mapped_column(
         ForeignKey("accounts.id", ondelete="RESTRICT"), nullable=False
     )
