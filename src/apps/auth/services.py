@@ -12,7 +12,7 @@ from config import settings
 
 
 class AuthService:
-    async def auth_user(self, email: str, plain_password: str) -> Optional[str]:
+    async def auth_user(self, email: str, plain_password: str) -> str:
         user: Optional[User] = await get_user_service().get_user(email=email)
         if not user:
             raise HTTPException(status.HTTP_400_BAD_REQUEST)
@@ -20,11 +20,12 @@ class AuthService:
             return await self.generate_jwt_token(
                 data={
                     "user_id": user.id, 
-                    "exp": datetime.now(tz=timezone) + timedelta(minutes=30),
+                    "exp": datetime.now(tz=timezone.utc) + timedelta(minutes=30),
                 }
             )
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST)
 
-    async def generate_jwt_token(data: dict[str, Any]) -> str:
+    async def generate_jwt_token(self, data: dict[str, Any]) -> str:
         token = jwt.encode(
             claims=data,
             key=settings.JWT_SECRET_KEY,
