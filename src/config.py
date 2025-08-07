@@ -16,6 +16,8 @@ class Settings(BaseSettings):
 
     JWT_SECRET_KEY: str
     JWT_ALG: str
+    
+    SECRET_KEY: str = "gfdmhghif38yrf9ew0jkf32"
 
     @property
     def DATABASE_URL(self):

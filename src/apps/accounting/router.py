@@ -1,7 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 
 from apps.accounting.services import get_account_service, get_transaction_service
-from apps.accounting.schemas import SAccountRead, STransactionRead
+from apps.accounting.schemas import SAccountRead, STransactionRead, STransactionCreate
+from apps.accounting.utils import verify_signature
 from apps.user.models import User
 from apps.user.utils import get_current_admin, get_current_user
 
@@ -29,3 +30,11 @@ async def get_account_transactions(account_id: int, user: User = Depends(get_cur
     if not account:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
     return await get_transaction_service().get_transactions(account_id=account_id)
+
+
+@router.post("/transaction", response_model=STransactionRead)
+async def add_transaction(transaction_cred: STransactionCreate):
+    data = transaction_cred.model_dump()
+    if verify_signature(data=data):
+        return await get_transaction_service().create_transaction(data=data)
+    raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST)

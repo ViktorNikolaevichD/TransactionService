@@ -17,6 +17,9 @@ class AccountService(BaseService):
 class TransactionService(BaseService):
     async def get_transactions(self, **filter_by) -> Sequence[Transaction]:
         return await self.repository.find_all(**filter_by)
+    
+    async def create_transaction(self, data: dict) -> Transaction:
+        return await self.repository.create_transaction(data=data)
 
 
 def get_account_service() -> AccountService:
